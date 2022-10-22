@@ -14,6 +14,11 @@ public class PlayerControllerX : MonoBehaviour
 
     private float normalStrength = 10; // how hard to hit enemy without powerup
     private float powerupStrength = 25; // how hard to hit enemy with powerup
+
+    public ParticleSystem smokeParticle;
+
+    private float xRange = 100.0f;
+    private float zRange = -7.0f;
     
     void Start()
     {
@@ -24,12 +29,35 @@ public class PlayerControllerX : MonoBehaviour
 
     void Update()
     {
-        // Add force to player in direction of the focal point (and camera)
-        float verticalInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime); 
+        float posX = transform.position.x;
+        float posZ = transform.position.z;
 
-        // Set powerup indicator position to beneath player
-        powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+        if (posZ < -9.0f) {
+            transform.position = new Vector3(posX, 0, -9.0f);
+        } else if (posZ > 25.0f) {
+            transform.position = new Vector3(posX, 0, 25.0f);
+        } else if (posX < -19 ) {
+            transform.position = new Vector3(-19, 0, posZ);
+        } else if (posX > 19) {
+            transform.position = new Vector3(19, 0, posZ);
+        } else {
+            // Add force to player in direction of the focal point (and camera)
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 playerPosition = focalPoint.transform.forward * verticalInput * speed * Time.deltaTime;
+
+            playerRb.AddForce(playerPosition);
+
+            // Set powerup indicator position to beneath player
+            powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+
+            // Set smokeParticle to always be where player is
+            smokeParticle.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+
+            if (Input.GetKey(KeyCode.Space)) {
+                smokeParticle.Play();
+                playerRb.AddForce(playerPosition * 2, ForceMode.Impulse);
+            }
+        }
 
     }
 
