@@ -19,6 +19,7 @@ public class PlayerControllerX : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
+        StartCoroutine(PowerupCooldown());
     }
 
     void Update()
