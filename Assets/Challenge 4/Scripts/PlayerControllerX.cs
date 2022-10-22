@@ -16,9 +16,6 @@ public class PlayerControllerX : MonoBehaviour
     private float powerupStrength = 25; // how hard to hit enemy with powerup
 
     public ParticleSystem smokeParticle;
-
-    private float xRange = 100.0f;
-    private float zRange = -7.0f;
     
     void Start()
     {
