@@ -55,11 +55,11 @@ public class SpawnManagerX : MonoBehaviour
         // Spawn number of enemy balls based on wave number
         for (int i = 0; i < waveCount; i++)
         {
-            //Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
         }
 
         waveCount++;
-        //ResetPlayerPosition(); // put player back at start
+        ResetPlayerPosition(); // put player back at start
 
     }
 
